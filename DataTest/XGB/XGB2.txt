@@ -1,0 +1,61 @@
+from xgboost import XGBClassifier
+
+XGBClassifier(base_score=0.5, booster='gbtree', colsample_bylevel=1,
+       colsample_bynode=1, colsample_bytree=1, gamma=0, learning_rate=0.1,
+       max_delta_step=0, max_depth=3, min_child_weight=1, missing=None,
+       n_estimators=100, n_jobs=1, nthread=None,
+       objective='binary:logistic', random_state=0, reg_alpha=0,
+       reg_lambda=1, scale_pos_weight=1, seed=None, silent=None,
+       subsample=1, verbosity=1)
+
+ 
+
+1. base_score:
+
+2. booster: 'gbtree' --- 基分类器为树模型，默认值；'gbliner' --- 基分类器为线性模型。
+
+3. colsample_bylevel: 控制树的每一级的每一次分裂，对列数的采样比重，默认值为1.
+
+4. colsample_bynode: 控制树的每一个节点的每一次分裂，对列数的采样比重，默认值为1.
+
+5. colsample_bytree: 训练每棵树时，使用特征占全部特征的比例，默认值为1，典型值为0.5-1.调节该参数可以防止过拟合。
+
+6. gamma: 惩罚项系数，制定节点斐裂所需的最小损失函数下降值，默认值为0。
+
+7. learning_rate: 学习率，控制每次迭代更新权重时的步长，默认值为0.1。该参数可参考上篇AdaBoostClassifier。
+
+8. max_delta_step: 限制每棵树权重改变的最大步长，默认值为0，即没有约束。如果为正值，则这个算法更加保守。通常不需要设置该参数，但是当样本十分不平衡时，对逻辑回归很有帮助。
+
+9. max_depth: 树的深度，默认值是6，值过大容易过拟合，值过小容易欠拟合。该参数同AdaBoostClassifier和RandomForestClassifier的max_depth参数。
+
+10. min_child_weight: 默认值为1，当值越大时，越容易欠拟合；当值越小时，越容易过拟合。
+
+11. missing:
+
+12. n_estimators: 基学习器的个数，默认值是100。该参数可参考上篇AdaBoostClassifier。
+
+13. n_jobs: 有多少处理器可以使用。默认值为None，即1，即只有一个处理器可以使用，-1意味着没有限制。
+
+14. objective: 目标函数。
+
+                        回归：'reg:linear', 'reg:logistic'; 
+
+                        二分类：'binary:logistic' 概率(默认值），'binary:logitraw'类别
+
+                        多分类：multi:softmax  num_class=n 返回类别，multi:softmax  num_class=n 返回概率
+
+                        rank:pairwise
+
+15. random_state: 随机种子
+
+16. reg_alpha: L1正则化，在高维度的情况下，调节该参数可以加快算法的速度。
+
+17. reg_lambda: L2正则化，调节该参数可以减少过拟合，默认值为1.
+
+18. scale_pos_weight: 正样本的权重，在二分类模型中，如果两个分类的样本比例失衡，可以设置该参数，模型效果会更好。比如，在研究疾病组和健康对照组分类时，postive：negative = 1:10，可以设置scale_pos_weight=10，来平衡样本。
+
+19. seed: 随机数的种子，
+
+20. silent: 默认值为=0，不输出中间过程；=1时，输出中间过程。
+
+21. subsample: 训练每棵树时，子采样的样本比例，默认值为1，即全部样本用于训练。调节该参数可以防止过拟合。

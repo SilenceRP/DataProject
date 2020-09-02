@@ -1,0 +1,70 @@
+CLASS
+class sklearn.model_selection.GridSearchCV(
+    estimator, param_grid,  scoring=None, 
+    fit_params=None, n_jobs=1,    iid=True,  
+    refit=True,  cv=None, verbose=0,   
+    pre_dispatch='2*n_jobs',  error_score='raise',      
+    return_train_score=True  
+參數說明
+estimator
+使用的分類器
+
+param_grid
+list 或是 dict 做最佳化的參數
+
+scoring
+default None
+None的時候即使用estimator的預設score
+
+fit_params
+丟給fit的參數，不過0.19版之後已經不用了
+
+n_jobs
+defualt 1
+使用多少CPU執行緒，如果設置-1就是火力全開!
+may raise errors if the dataset is large and not enough memory is available
+如果設置-1或>1的話，在數據量過大的情況下就可能會因為記憶體不足error
+
+iid
+default True
+設置為True時即假設在折疊中樣本概率分佈一致，損失估計為所有樣本總合，而非平均。
+
+refit
+default True
+設置為true的話，會在最後取得最佳參數之後再以該參數做fit一次全部的資料。
+
+cv
+default 3
+交叉驗證，將資料分n份
+可以是整數、交叉驗證或一個可迭代器
+None：默認為3
+整數n：n折交叉驗證
+另篇文字分詞的演算法是以5來計算，這個部份的用途主要是將資料分群之後交叉取得較佳模型。
+For integer/None inputs, if the estimator is a classifier and y is either binary or multiclass, StratifiedKFold is used. In all other cases, KFold is used.
+說明也提到，預設情況下是以KFold來處理的。除非你是多分類才會以StratifiedKFold。
+那KFold與StratifiedKFold的話，我們另篇再說簡單說明。
+
+verbose
+default 0
+設置為0即訓練過程不會顯示，為1的話偶爾顯示，大於1的時候必顯示。
+
+pre_dispatch
+default
+指定總共分發的並行任務，似乎是用來控制CPU使用率。
+None-所有作業立即展開，用在較小型的測試作業!
+int-要指定確切數量
+String-2*n_jobs
+. A workaround in this case is to set pre_dispatch. Then, the memory is copied only pre_dispatch many times. A reasonable value for pre_dispatch is 2 * n_jobs.
+在api說明下，建議設置是2 * n_jobs
+error_score
+default raise
+return_train_score
+default True {‘True’, ‘False’}
+如果設置False就不會回傳結果!
+即屬性cv_results_ 就不會有分數的值了。
+方法
+decision_function(X)
+Call decision_function on the estimator with the best found params.
+只有在refit=True跟分類器可以實作的時候才有效果。
+以最佳參數執行!
+主要取得X的
